@@ -1,3 +1,4 @@
+import os
 from PIL import Image
 
 def stretch_image(image_path, stretch_type, aspect_ratio):
@@ -12,10 +13,10 @@ def stretch_image(image_path, stretch_type, aspect_ratio):
     aspect_ratio_decimal = width_ratio / height_ratio
 
     # Calculate the new width and height based on the aspect ratio
-    if stretch_type == 'horizontal':
+    if stretch_type == 'horizontal' or stretch_type == '1':
         new_width = int(original_width * aspect_ratio_decimal)
         new_height = original_height
-    elif stretch_type == 'vertical':
+    elif stretch_type == 'vertical' or stretch_type == '2':
         new_width = original_width
         new_height = int(original_height * aspect_ratio_decimal)
     else:
@@ -24,12 +25,15 @@ def stretch_image(image_path, stretch_type, aspect_ratio):
     # Resize the image
     stretched_image = image.resize((new_width, new_height))
 
-    # Save the stretched image
-    stretched_image.save('stretched_image.jpg')
+    # Get the file extension
+    _, file_extension = os.path.splitext(image_path)
 
-# Example usage
-image_path = 'iexpdtlracpa1.png'
-stretch_type = 'vertical'
-aspect_ratio = '4:3'
+    # Save the stretched image with the same file extension
+    stretched_image.save('stretched_image' + file_extension)
 
-stretch_image(image_path, stretch_type, aspect_ratio)
+if __name__ == '__main__':
+    image_path = input('Enter the image path: ')
+    stretch_type = input('Enter the stretch type (horizontal(1) or vertical(2)): ')
+    aspect_ratio = input('Enter the aspect ratio (for example, 4:3 or 16:9): ')
+
+    stretch_image(image_path, stretch_type, aspect_ratio)
