@@ -17,12 +17,12 @@ def stretch_image(image_path, stretch_type, aspect_ratio):
         new_size = max(original_width, original_height)
         stretched_image = image.resize((new_size, new_size))
     elif stretch_type == 'horizontal' or stretch_type == '1':
-        new_width = int(original_width * aspect_ratio_decimal)
+        new_width = int(original_height * aspect_ratio_decimal)
         new_height = original_height
         stretched_image = image.resize((new_width, new_height))
     elif stretch_type == 'vertical' or stretch_type == '2':
         new_width = original_width
-        new_height = int(original_height * aspect_ratio_decimal)
+        new_height = int(original_width / aspect_ratio_decimal)
         stretched_image = image.resize((new_width, new_height))
     else:
         raise ValueError("Invalid stretch type. Please choose 'horizontal' or 'vertical'.")
